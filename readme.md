@@ -1,6 +1,6 @@
-#V 1.0
+## V 1.0
 
-## AIM OF THE PROJECT
+### AIM OF THE PROJECT
 Script to automatize the reporting system of a small clothing brand. The program
 takes input from the company's website in Big Cartel and outputs a pdf file
 containing graphs, text and tables.
@@ -10,7 +10,7 @@ on the website's credentials.
 
 The main file is "Xenos_Report.py", everything else is aimed at its functioning.
 
-## LOGIC OF THE PROGRAM
+### LOGIC OF THE PROGRAM
 1. Log into the website through webbot and download a .csv containing the sales'
 records
 1. Extract from the external file "Report_path.txt" the automatic location where
@@ -34,10 +34,11 @@ using python-docx
 1. Transform the .docx output into a .pdf
 1. Move back the .pdf into the main folder
 
-## TO COME, V 2.0
+### TO COME, V 2.0
 In section 4.2
 - Uniformed city, province and region names, from external file
 - Type of item, from external file
+
 In section 4.4
 - Extract and format tables through openpyxl
 - Add them to the report
