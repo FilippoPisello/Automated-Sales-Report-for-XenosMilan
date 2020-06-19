@@ -9,7 +9,7 @@ on the website's credentials.
 The main file is "Xenos_Report.py", everything else is aimed at its functioning.
 
 ## V 1.0 (Current V 1.1, see below)
-### LOGIC OF THE PROGRAM
+### Logic of the program
 1. Log into the website through webbot and download a .csv containing the sales'
 records
 1. Extract from the external file "Report_path.txt" the automatic location where
