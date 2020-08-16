@@ -18,7 +18,7 @@ from lib import custom_graphs as c_graphs
 from lib import document_styles
 from lib import to_pdf
 
-from docx.shared import Cm
+from docx.shared import Pt, Cm
 
 # ------------------------------------------------------------------------------
 # 1) SOURCE CSV DOWNLOAD
@@ -28,10 +28,10 @@ web = Browser()
 web.go_to("https://my.bigcartel.com")
 
 # Provide login information and log in
-web.type("#USERNAME",
+web.type("xenosmilan.**********",
          into="account_subdomain",
          id="account_subdomain")
-web.type("#PASSWORD", into="password", id="password")
+web.type("****", into="password", id="password")
 web.click("Log In")
 
 # Navigate through the website
@@ -39,13 +39,15 @@ web.click("Orders")
 web.click("Shipped")
 
 # Downloadthereport
-web.go_to("https://my.bigcartel.com/orders_exports.csv")
+web.go_to("https://****/orders_exports.csv")
 time.sleep(5)
 
 # Close the browser
 web.quit()
 
+# NOTE##########################################
 # Setting the directory into the resources folder
+# ##############################################
 resources_path = os.getcwd() + "/Resources"
 
 os.chdir(resources_path)
@@ -73,9 +75,17 @@ os.replace(old_report_path, new_report_path)
 # ------------------------------------------------------------------------------
 # 4) REPORT ANALYSIS
 # ------------------------------------------------------------------------------
-# 4.1) Getting the table ready
+# ### 4.0) Getting the table ready
 # Open the table
 df = pd.read_csv(new_report_path)
+
+# ------------------------------------------------------------------------------
+# 4) REPORT ANALYSIS
+# ------------------------------------------------------------------------------
+# ### 4.0) Getting the table ready
+# Open the table
+df = pd.read_csv("orders.csv")
+# FROM HERE ON
 
 # Delete useless columns
 to_drop = ["Buyer email", "Buyer phone number", "Transaction ID", "Time",
@@ -137,10 +147,14 @@ df = df[["Code", "Name surname", "Male", "Month code", "Date", "Order competed",
          "Discount", "Net earnings"]]
 
 df.sort_values(by=["Date"], inplace=True, ascending=False)
-df.to_excel("Orders updated.xlsx", index=False)
+
+# Saving the formatted report, overwriting if already present
+filename = "Orders updated.xlsx"
+if os.path.isfile(filename): os.remove(filename)
+df.to_excel(filename, index=False)
 
 # ------------------------------------------
-# ### 4.2) Perform the analysis
+# ### 4.2) Creating report for total values
 # Generate descriptive indicators for volume of sales and revenues
 
 values_tot = {}
@@ -156,7 +170,6 @@ for column in columns_of_interest:
     values_min[column] = round(df[column].min(), 0)
     values_max[column] = round(df[column].max(), 0)
 
-# Create aggegated tables and plots
 df1 = c_aggregate.aggregate_by_date(df, "Month code", "Month")
 
 c_graphs.plot_vert_time_serie(df1, "Month", "Tot items ordered",
